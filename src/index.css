@@ -1,0 +1,206 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface text-on-surface font-inter antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-manrope font-bold tracking-tight;
+  }
+
+  h1 {
+    @apply text-display-sm md:text-display-md;
+  }
+
+  h2 {
+    @apply text-headline-sm md:text-headline-md;
+  }
+
+  h3 {
+    @apply text-headline-sm;
+  }
+
+  h4 {
+    @apply text-title-lg;
+  }
+
+  h5 {
+    @apply text-title-md;
+  }
+
+  h6 {
+    @apply text-title-sm;
+  }
+
+  p {
+    @apply text-body-md;
+  }
+
+  button {
+    @apply transition-colors duration-200;
+  }
+
+  a {
+    @apply transition-colors duration-200;
+  }
+
+  input, textarea, select {
+    @apply transition-colors duration-200;
+  }
+}
+
+@layer components {
+  /* Button base styles */
+  .btn {
+    @apply inline-flex items-center justify-center px-lg py-xs rounded-small font-medium text-label-lg;
+    @apply transition-all duration-200 cursor-pointer;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary text-on-primary hover:bg-primary-container;
+  }
+
+  .btn-secondary {
+    @apply btn bg-secondary text-on-secondary hover:bg-secondary-container;
+  }
+
+  .btn-tertiary {
+    @apply btn bg-tertiary text-on-tertiary hover:bg-tertiary-container;
+  }
+
+  .btn-outline {
+    @apply btn border border-outline text-on-surface hover:bg-surface-secondary;
+  }
+
+  .btn-ghost {
+    @apply btn text-on-surface hover:bg-surface-secondary;
+  }
+
+  /* Card component */
+  .card {
+    @apply rounded-medium bg-surface-primary border border-outline-variant overflow-hidden;
+  }
+
+  .card-interactive {
+    @apply card cursor-pointer transition-all duration-200 hover:shadow-level-2;
+  }
+
+  /* Input styles */
+  .input {
+    @apply px-lg py-xs rounded-small bg-surface-secondary border border-outline text-on-surface;
+    @apply placeholder:text-on-surface-muted;
+    @apply focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-block px-md py-xs rounded-full text-label-sm font-medium;
+  }
+
+  .badge-primary {
+    @apply badge bg-primary-container text-on-primary;
+  }
+
+  .badge-secondary {
+    @apply badge bg-secondary-container text-on-secondary;
+  }
+
+  /* Overlay gradient for hero images */
+  .hero-gradient {
+    @apply bg-gradient-overlay-dark absolute inset-0;
+  }
+
+  /* Container max-width utility */
+  .container-safe {
+    @apply w-full max-w-7xl mx-auto px-lg md:px-2xl;
+  }
+
+  /* Scrollbar styling (webkit browsers) */
+  .scrollbar-styled::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+
+  .scrollbar-styled::-webkit-scrollbar-track {
+    @apply bg-surface-secondary;
+  }
+
+  .scrollbar-styled::-webkit-scrollbar-thumb {
+    @apply bg-outline rounded-full hover:bg-outline-variant;
+  }
+
+  /* Smooth transitions */
+  .transition-smooth {
+    @apply transition-all duration-300 ease-in-out;
+  }
+}
+
+@layer utilities {
+  /* Text utilities */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r;
+  }
+
+  /* Flex center */
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  /* Absolute center */
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
+  }
+
+  /* Responsive grid */
+  .grid-auto-fit {
+    @apply grid grid-cols-1 gap-lg;
+    @apply md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+  }
+
+  /* Overlay */
+  .overlay {
+    @apply fixed inset-0 bg-black bg-opacity-50;
+  }
+
+  /* Line clamping */
+  .truncate-1 {
+    @apply overflow-hidden text-ellipsis whitespace-nowrap;
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    @apply bg-white bg-opacity-10 backdrop-blur-md;
+  }
+}
+
+/* Custom scrollbar for entire app */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(100, 100, 100);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(130, 130, 130);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-color: rgb(100, 100, 100) transparent;
+  scrollbar-width: thin;
+}
