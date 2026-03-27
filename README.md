@@ -205,7 +205,7 @@ This task list is organized in dependency order. Start with TASK 1 and progress 
 ---
 
 ### TASK 4: Build CategorySwimlane component — Horizontal scroll row per category
-**Status**: Stub created
+**Status**: ✅ Complete
 **Description**: Reusable horizontal scrolling row of articles for each category. Shows "Category Name" + "See All" link as header. Grid of article cards (4-6 visible depending on screen size) with snap points. Left/right arrow buttons on desktop to scroll (hidden on mobile). Lazy-load images as they enter viewport. "See All" link navigates to category page with all articles.
 **Dependencies**: TASK 1, TASK 5 (ArticleCard)
 **Acceptance Criteria**:

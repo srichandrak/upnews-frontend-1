@@ -6,8 +6,9 @@ import { Bookmark } from 'lucide-react'
  * Article Card Component
  * Displays article thumbnail, title, source, and time.
  * Hover shows summary overlay.
+ * Supports lazy loading via Intersection Observer (isVisible prop)
  */
-function ArticleCard({ article, isLoading = false }) {
+function ArticleCard({ article, isLoading = false, isVisible = true }) {
   if (isLoading) {
     return <ArticleCardSkeleton />
   }
@@ -20,8 +21,8 @@ function ArticleCard({ article, isLoading = false }) {
       className="group card-interactive block overflow-hidden aspect-video bg-surface-secondary hover:shadow-level-3"
     >
       <div className="relative w-full h-full">
-        {/* Background Image */}
-        {article?.thumbnail_url && (
+        {/* Background Image - lazy loaded via Intersection Observer */}
+        {article?.thumbnail_url && isVisible && (
           <img
             src={article.thumbnail_url}
             alt={article.title}

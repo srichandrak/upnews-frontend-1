@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import ArticleCard from '@components/articles/ArticleCard'
@@ -6,11 +6,14 @@ import ArticleCard from '@components/articles/ArticleCard'
 /**
  * Category Swimlane Component
  * Horizontal scrolling row of articles for a specific category
+ * Features: snap scrolling, responsive card widths, lazy loading with Intersection Observer
  */
 function CategorySwimlane({ category, articles = [], isLoading = false }) {
   const scrollContainerRef = useRef(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
+  // Initialize all cards as visible, IntersectionObserver will track them for optimization
+  const [visibleCards, setVisibleCards] = useState(() => new Set(articles.map(a => a.id)))
 
   const checkScroll = () => {
     if (!scrollContainerRef.current) return
@@ -36,11 +39,39 @@ function CategorySwimlane({ category, articles = [], isLoading = false }) {
     setTimeout(checkScroll, 300)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     checkScroll()
     window.addEventListener('resize', checkScroll)
     return () => window.removeEventListener('resize', checkScroll)
   }, [articles])
+
+  // Update visible cards when articles change
+  useEffect(() => {
+    setVisibleCards(new Set(articles.map(a => a.id)))
+  }, [articles])
+
+  // Intersection Observer for lazy loading
+  const observerCallback = useCallback((entries) => {
+    entries.forEach((entry) => {
+      const cardId = entry.target.dataset.cardId
+      if (entry.isIntersecting && cardId) {
+        setVisibleCards((prev) => new Set([...prev, cardId]))
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(observerCallback, {
+      root: scrollContainerRef.current,
+      rootMargin: '100px',
+      threshold: 0.1,
+    })
+
+    const cards = scrollContainerRef.current?.querySelectorAll('[data-card-id]')
+    cards?.forEach((card) => observer.observe(card))
+
+    return () => observer.disconnect()
+  }, [articles, observerCallback])
 
   return (
     <section className="py-2xl">
@@ -74,21 +105,28 @@ function CategorySwimlane({ category, articles = [], isLoading = false }) {
         <div
           ref={scrollContainerRef}
           onScroll={checkScroll}
-          className="overflow-x-auto scrollbar-hide scroll-smooth px-0 md:px-3xl"
+          className="overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory px-0 md:px-3xl"
         >
           <div className="flex gap-lg pb-md">
             {isLoading ? (
-              // Loading Skeletons
-              Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="flex-shrink-0 w-full md:w-1/4">
+              // Loading Skeletons - responsive: 2 mobile, 4 tablet, 6 desktop
+              Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="flex-shrink-0 w-[calc(50%-8px)] md:w-[calc(25%-12px)] lg:w-[calc(16.666%-13.33px)] snap-start">
                   <ArticleCard isLoading={true} />
                 </div>
               ))
             ) : articles.length > 0 ? (
-              // Article Cards
+              // Article Cards - responsive: 2 mobile, 4 tablet, 6 desktop
               articles.map((article) => (
-                <div key={article.id} className="flex-shrink-0 w-full md:w-1/4">
-                  <ArticleCard article={article} />
+                <div
+                  key={article.id}
+                  data-card-id={article.id}
+                  className="flex-shrink-0 w-[calc(50%-8px)] md:w-[calc(25%-12px)] lg:w-[calc(16.666%-13.33px)] snap-start"
+                >
+                  <ArticleCard
+                    article={article}
+                    isVisible={visibleCards.has(article.id)}
+                  />
                 </div>
               ))
             ) : (
