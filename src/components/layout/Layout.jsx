@@ -1,18 +1,29 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 import Navbar from './Navbar'
 import MobileNav from './MobileNav'
 import Footer from './Footer'
+import SearchOverlay from '@components/search/SearchOverlay'
 
 /**
  * Main Layout Component
  * Provides consistent structure across all pages
  */
 function Layout({ children }) {
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+
+  const handleSearchOpen = useCallback(() => {
+    setIsSearchOpen(true)
+  }, [])
+
+  const handleSearchClose = useCallback(() => {
+    setIsSearchOpen(false)
+  }, [])
+
   return (
     <div className="min-h-screen bg-surface flex flex-col">
       {/* Desktop Navbar */}
       <div className="hidden md:block sticky top-0 z-40 bg-surface border-b border-outline-variant">
-        <Navbar />
+        <Navbar onSearchClick={handleSearchOpen} />
       </div>
 
       {/* Main Content */}
@@ -22,13 +33,16 @@ function Layout({ children }) {
 
       {/* Mobile Bottom Navigation */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-surface border-t border-outline-variant">
-        <MobileNav />
+        <MobileNav onSearchClick={handleSearchOpen} />
       </div>
 
       {/* Desktop Footer */}
       <div className="hidden md:block bg-surface-secondary border-t border-outline-variant mt-3xl">
         <Footer />
       </div>
+
+      {/* Search Overlay */}
+      <SearchOverlay isOpen={isSearchOpen} onClose={handleSearchClose} />
     </div>
   )
 }
