@@ -289,7 +289,7 @@ This task list is organized in dependency order. Start with TASK 1 and progress 
 ---
 
 ### TASK 8: Build BookmarksPage — Saved articles grid
-**Status**: Plan
+**Status**: ✅ Complete
 **Description**: Route `/bookmarks` displays grid of all bookmarked articles. Uses same ArticleCard component. Remove button on each card with confirmation dialog. Empty state with message and link to home. Sort options (newest, oldest, alphabetical). Can be paginated or infinite scroll.
 **Dependencies**: TASK 1, TASK 5 (ArticleCard), Tanstack Query
 **Acceptance Criteria**:
