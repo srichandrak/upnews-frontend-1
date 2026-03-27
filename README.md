@@ -224,7 +224,7 @@ This task list is organized in dependency order. Start with TASK 1 and progress 
 ---
 
 ### TASK 5: Build ArticleCard component — Clickable card with preview
-**Status**: Stub created
+**Status**: ✅ Complete
 **Description**: Reusable article card component. Displays thumbnail image (16:9 aspect), title (1-2 lines), source, publication time (e.g., "2 hours ago"). On hover: scale up slightly (105%), show summary text overlay with gradient background. Click to navigate to article detail. Include skeleton loading variant for loading state.
 **Dependencies**: TASK 1
 **Acceptance Criteria**:
