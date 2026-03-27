@@ -5,15 +5,19 @@ import Layout from './Layout'
 
 // Mock child components
 vi.mock('./Navbar', () => ({
-  default: () => <nav data-testid="navbar">Navbar</nav>,
+  default: ({ onSearchClick }) => <nav data-testid="navbar">Navbar</nav>,
 }))
 
 vi.mock('./MobileNav', () => ({
-  default: () => <nav data-testid="mobile-nav">MobileNav</nav>,
+  default: ({ onSearchClick }) => <nav data-testid="mobile-nav">MobileNav</nav>,
 }))
 
 vi.mock('./Footer', () => ({
   default: () => <footer data-testid="footer">Footer</footer>,
+}))
+
+vi.mock('@components/search/SearchOverlay', () => ({
+  default: ({ isOpen, onClose }) => isOpen ? <div data-testid="search-overlay">SearchOverlay</div> : null,
 }))
 
 const renderWithRouter = (component) => {

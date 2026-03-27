@@ -267,7 +267,7 @@ This task list is organized in dependency order. Start with TASK 1 and progress 
 ---
 
 ### TASK 7: Build SearchOverlay — Full-screen search interface
-**Status**: Plan
+**Status**: ✅ Complete
 **Description**: Full-screen search interface opens with "/" key or search icon click. Large search input with clear button. Debounced API search as user types (300ms delay). Results show as article cards grid. Keyboard navigation: arrow keys to move between results, Enter to select, Esc to close. Recent searches shown when input is empty. No results state. Search analytics.
 **Dependencies**: TASK 1, TASK 5 (ArticleCard), Tanstack Query
 **Acceptance Criteria**:
