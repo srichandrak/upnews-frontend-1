@@ -184,7 +184,7 @@ This task list is organized in dependency order. Start with TASK 1 and progress 
 ---
 
 ### TASK 3: Build HeroCarousel component — Auto-rotating featured articles
-**Status**: Stub created
+**Status**: ✅ Complete
 **Description**: Full-bleed carousel of top 5 featured articles. Each slide has thumbnail background (darkened with gradient overlay), article title, source, time ago. Auto-rotates every 5 seconds. Framer Motion crossfade transition. Progress dots at bottom show current slide + remaining auto-rotate time. Prev/next arrow buttons (desktop only). Swipe gestures on mobile. Click to navigate to article detail.
 **Dependencies**: TASK 1, Framer Motion
 **Acceptance Criteria**:

@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+
+const ROTATION_INTERVAL = 5000 // 5 seconds
+const SWIPE_THRESHOLD = 50 // minimum swipe distance in pixels
 
 /**
  * Hero Carousel Component
@@ -10,26 +13,45 @@ import { motion, AnimatePresence } from 'framer-motion'
 function HeroCarousel({ articles = [], isLoading = false }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
+  const [animationKey, setAnimationKey] = useState(0)
 
   const displayArticles = articles.slice(0, 5) // Only show top 5
+
+  const goToNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % displayArticles.length)
+    setAnimationKey((prev) => prev + 1)
+  }, [displayArticles.length])
+
+  const goToPrev = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + displayArticles.length) % displayArticles.length)
+    setAnimationKey((prev) => prev + 1)
+  }, [displayArticles.length])
 
   // Auto-rotate every 5 seconds
   useEffect(() => {
     if (isPaused || displayArticles.length === 0) return
 
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % displayArticles.length)
-    }, 5000)
+      goToNext()
+    }, ROTATION_INTERVAL)
 
     return () => clearInterval(interval)
-  }, [displayArticles.length, isPaused])
+  }, [displayArticles.length, isPaused, goToNext])
 
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + displayArticles.length) % displayArticles.length)
-  }
+  const goToSlide = useCallback((index) => {
+    setCurrentIndex(index)
+    setAnimationKey((prev) => prev + 1)
+  }, [])
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % displayArticles.length)
+  // Handle swipe gestures
+  const handleDragEnd = (event, info) => {
+    const { offset, velocity } = info
+    // Swipe left (next) or right (prev) based on offset or velocity
+    if (offset.x < -SWIPE_THRESHOLD || velocity.x < -500) {
+      goToNext()
+    } else if (offset.x > SWIPE_THRESHOLD || velocity.x > 500) {
+      goToPrev()
+    }
   }
 
   if (isLoading || displayArticles.length === 0) {
@@ -51,7 +73,11 @@ function HeroCarousel({ articles = [], isLoading = false }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="absolute inset-0"
+          className="absolute inset-0 touch-pan-y"
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.1}
+          onDragEnd={handleDragEnd}
         >
           {/* Background Image */}
           {article?.thumbnail_url && (
@@ -93,7 +119,7 @@ function HeroCarousel({ articles = [], isLoading = false }) {
       {displayArticles.length > 1 && (
         <>
           <button
-            onClick={handlePrev}
+            onClick={goToPrev}
             className="hidden md:flex absolute left-lg top-1/2 -translate-y-1/2 z-20 p-md rounded-full bg-black bg-opacity-50 hover:bg-opacity-70 text-on-surface transition-colors"
             aria-label="Previous article"
           >
@@ -101,7 +127,7 @@ function HeroCarousel({ articles = [], isLoading = false }) {
           </button>
 
           <button
-            onClick={handleNext}
+            onClick={goToNext}
             className="hidden md:flex absolute right-lg top-1/2 -translate-y-1/2 z-20 p-md rounded-full bg-black bg-opacity-50 hover:bg-opacity-70 text-on-surface transition-colors"
             aria-label="Next article"
           >
@@ -110,23 +136,42 @@ function HeroCarousel({ articles = [], isLoading = false }) {
         </>
       )}
 
-      {/* Progress Dots */}
+      {/* Progress Dots with Countdown */}
       {displayArticles.length > 1 && (
         <div className="absolute bottom-lg left-1/2 -translate-x-1/2 z-20 flex items-center gap-sm">
           {displayArticles.map((_, index) => (
             <button
               key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`h-2 rounded-full transition-all duration-300 ${
+              onClick={() => goToSlide(index)}
+              className={`relative h-2 rounded-full overflow-hidden transition-all duration-300 ${
                 index === currentIndex
-                  ? 'bg-primary w-8'
+                  ? 'bg-on-surface-variant bg-opacity-30 w-8'
                   : 'bg-on-surface-variant bg-opacity-50 w-2 hover:bg-opacity-75'
               }`}
               aria-label={`Go to slide ${index + 1}`}
-            />
+              aria-current={index === currentIndex ? 'true' : undefined}
+            >
+              {index === currentIndex && (
+                <span
+                  key={animationKey}
+                  className="absolute inset-0 bg-primary rounded-full origin-left"
+                  style={{
+                    animation: isPaused ? 'none' : `progress ${ROTATION_INTERVAL}ms linear forwards`,
+                  }}
+                />
+              )}
+            </button>
           ))}
         </div>
       )}
+
+      {/* Progress animation keyframes */}
+      <style>{`
+        @keyframes progress {
+          from { transform: scaleX(0); }
+          to { transform: scaleX(1); }
+        }
+      `}</style>
     </div>
   )
 }
