@@ -244,7 +244,7 @@ This task list is organized in dependency order. Start with TASK 1 and progress 
 ---
 
 ### TASK 6: Build ArticleDetail page/modal — Full article view
-**Status**: Plan
+**Status**: ✅ Complete
 **Description**: Route `/article/:id` displays full article. Shows large thumbnail image, article title, source + publication time, full summary text, "Read Full Article" button (external link), related articles (3-4 cards below), share buttons (Twitter, Facebook, LinkedIn, copy link), bookmark toggle button. Can be modal overlay or full page. Modal variant closes with X button or backdrop click.
 **Dependencies**: TASK 1, TASK 5 (ArticleCard for related articles)
 **Acceptance Criteria**:

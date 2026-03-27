@@ -7,6 +7,7 @@ import Layout from '@components/layout/Layout'
 
 // Pages
 import Home from '@pages/Home'
+import ArticleDetail from '@pages/ArticleDetail'
 import NotFound from '@pages/NotFound'
 
 // Create Tanstack Query client
@@ -28,7 +29,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/category/:category" element={<Home />} />
-            <Route path="/article/:id" element={<div className="p-lg">Article Detail - Coming Soon</div>} />
+            <Route path="/article/:id" element={<ArticleDetail />} />
             <Route path="/bookmarks" element={<div className="p-lg">Bookmarks - Coming Soon</div>} />
             <Route path="/search" element={<div className="p-lg">Search - Coming Soon</div>} />
             <Route path="/404" element={<NotFound />} />
