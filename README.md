@@ -32,7 +32,8 @@ UpNews Frontend is a modern, responsive single-page application that delivers po
 |-------|------------|
 | **Framework** | React 18 |
 | **Build Tool** | Vite |
-| **Styling** | TailwindCSS v4 |
+| **Styling** | TailwindCSS v3 |
+| **Testing** | Vitest + Testing Library |
 | **Animations** | Framer Motion |
 | **State Management** | Tanstack Query (React Query) |
 | **Routing** | React Router v6 |
@@ -141,8 +142,8 @@ The design system uses a Netflix-inspired dark theme with carefully chosen color
 This task list is organized in dependency order. Start with TASK 1 and progress sequentially for best results.
 
 ### TASK 1: Set up Vite + React + TailwindCSS + React Router project
-**Status**: Scaffold in place
-**Description**: Initialize Vite project with React, install and configure TailwindCSS v4 with the dark theme palette defined in `tailwind.config.js`, set up React Router, and configure path aliases (`@/components`, `@/hooks`, etc.).
+**Status**: ✅ Complete
+**Description**: Initialize Vite project with React, install and configure TailwindCSS v3 with the dark theme palette defined in `tailwind.config.js`, set up React Router, and configure path aliases (`@/components`, `@/hooks`, etc.). Unit tests configured with Vitest and Testing Library.
 **Dependencies**: None
 **Acceptance Criteria**:
 - `npm run dev` starts development server on port 5173
@@ -161,7 +162,7 @@ This task list is organized in dependency order. Start with TASK 1 and progress 
 ---
 
 ### TASK 2: Create layout components — Navbar, MobileNav, Footer
-**Status**: Stubs created
+**Status**: ✅ Complete
 **Description**: Build responsive header/navigation components. Desktop navbar with logo, category links (All, Technology, Health, Environment, Science, Inspiring Stories), search icon, and user menu dropdown. Mobile nav with bottom tab bar (Home, Search, Bookmarks, Profile). Footer with links, about, social.
 **Dependencies**: TASK 1
 **Acceptance Criteria**:
