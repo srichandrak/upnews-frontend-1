@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from '@api/queryClient'
 
 // Layout
 import Layout from '@components/layout/Layout'
@@ -10,17 +11,6 @@ import Home from '@pages/Home'
 import ArticleDetail from '@pages/ArticleDetail'
 import BookmarksPage from '@pages/BookmarksPage'
 import NotFound from '@pages/NotFound'
-
-// Create Tanstack Query client
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      gcTime: 30 * 60 * 1000, // 30 minutes (formerly cacheTime)
-      retry: 1,
-    },
-  },
-})
 
 function App() {
   return (

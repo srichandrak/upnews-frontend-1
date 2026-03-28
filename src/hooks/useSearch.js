@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { apiGet } from '@api/client'
+import { queryKeys } from '@api/queryClient'
 
 const RECENT_SEARCHES_KEY = 'upnews_recent_searches'
 const MAX_RECENT_SEARCHES = 5
@@ -27,7 +28,7 @@ export function useSearchArticles(query, { enabled = true } = {}) {
   }, [query])
 
   return useQuery({
-    queryKey: ['search', debouncedQuery],
+    queryKey: queryKeys.search.query(debouncedQuery),
     queryFn: () => apiGet(`/api/search?q=${encodeURIComponent(debouncedQuery)}`),
     enabled: enabled && debouncedQuery.length >= 2,
     staleTime: 2 * 60 * 1000, // 2 minutes
