@@ -8,6 +8,7 @@ import Layout from '@components/layout/Layout'
 
 // Pages
 import Home from '@pages/Home'
+import CategoryPage from '@pages/CategoryPage'
 import ArticleDetail from '@pages/ArticleDetail'
 import BookmarksPage from '@pages/BookmarksPage'
 import NotFound from '@pages/NotFound'
@@ -19,7 +20,7 @@ function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/category/:category" element={<Home />} />
+            <Route path="/category/:category" element={<CategoryPage />} />
             <Route path="/article/:id" element={<ArticleDetail />} />
             <Route path="/bookmarks" element={<BookmarksPage />} />
             <Route path="/search" element={<div className="p-lg">Search - Coming Soon</div>} />
