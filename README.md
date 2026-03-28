@@ -309,7 +309,7 @@ This task list is organized in dependency order. Start with TASK 1 and progress 
 ---
 
 ### TASK 9: API client layer — Tanstack Query hooks
-**Status**: Stubs created
+**Status**: ✅ Complete
 **Description**: Build API client and custom hooks for all data fetching. Use Tanstack Query (React Query) for caching, pagination, and state management. Hooks: `useArticles(category, page)`, `useArticle(id)`, `useCategories()`, `useBookmarks()`, `useSearch(query)`. Error handling, loading states. Configure API base URL from environment.
 **Dependencies**: TASK 1, Tanstack Query installed
 **Acceptance Criteria**:
@@ -335,7 +335,7 @@ This task list is organized in dependency order. Start with TASK 1 and progress 
 ---
 
 ### TASK 10: Infinite scroll / pagination on category pages
-**Status**: Plan
+**Status**: ✅ Complete
 **Description**: Build category page (`/category/:name`) with all articles in that category. Implement infinite scroll using Intersection Observer. Load next page when user scrolls near bottom. Loading skeleton shown while fetching. Maintain scroll position on navigation. Support filter options (sort by date, popularity).
 **Dependencies**: TASK 1, TASK 5 (ArticleCard), TASK 9 (API hooks)
 **Acceptance Criteria**:
